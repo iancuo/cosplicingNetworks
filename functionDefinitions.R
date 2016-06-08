@@ -109,17 +109,18 @@ mtext("E", NORTH<-3, at=-2, line=0.25, cex=2.5, font=2)
 
 ####################################################################################
 
-annotateMouseModulesGO = function (colorsCoexpr, transcriptInfoMouse, type)
+annotateMouseModulesGO = function (colorsCoexpr, transcriptInfoMouse, type, fileNamePostfix)
   # this assumes the gene identifiers are gene symbols, whichr are the names of the colorsCoexpr
-  
+  # fileNamePostFix has been added so that the user may create separate files for different comparison groups in
+  # the same directory; otherwise, if this function is run again for another group, it will overwrite the previously
+  # generated file.
 {
   library("GOstats")
   
   dirName=paste("results", type, sep="")
   try(dir.create(dirName), silent = F)
   
-  
-  fileName=paste("results", type,"/modules", type, "GO.csv", sep="")
+  fileName=paste("results", type,"/modules", type, "_GO_", fileNamePostfix, ".csv", sep="")
   modules=names(table(colorsCoexpr))
   geneNames=names(colorsCoexpr)    
   networkTranscriptInfo= transcriptInfoMouse[which(transcriptInfoMouse[,"external_gene_name"] %in% geneNames),]
