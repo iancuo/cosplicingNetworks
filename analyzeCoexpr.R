@@ -228,7 +228,8 @@ names(pvalVar)=geneNames
 pvalVar=pvalVar
 
 for (gene in geneNames){
-  pvalVar[gene]=var.test(x=HSCC_H[gene,], y=HSCC_L[gene,])$p.value
+  # Convert x and y to matrix just in case it's not; var.test doesn't seem to recognize data.frames
+  pvalVar[gene]=var.test(x=as.matrix(HSCC_H[gene,]), y=as.matrix(HSCC_L[gene,]))$p.value
 }
 
 adjpOut=mt.rawp2adjp(pvalVar, proc=c( "BH"))
