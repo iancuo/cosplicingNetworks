@@ -258,8 +258,10 @@ close(fileConnSummary)
 
 ############################################################################
 # evaluate changes in edge strength
-rawAdj1=adjacency(t(HSCC_H), power=1)
-rawAdj2=adjacency(t(HSCC_L), power=1)
+# Here "*1" is forcing the input to be seen as numeric rather than integer
+# because REAL() only works with "numeric"; otherwise you will get an error.
+rawAdj1=adjacency(t(HSCC_H)*1, power=1)
+rawAdj2=adjacency(t(HSCC_L)*1, power=1)
 
 diffEdgesShell = diffEdges(rawAdj1, rawAdj2, n1=dim(HSCC_H)[2], n2=dim(HSCC_L)[2], pThreshold=0.01, adjThreshold=0.5, nCores=7)
   
